@@ -1,14 +1,10 @@
-/* import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
 export async function main(
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> {
-  return {};
+  return {
+    statusCode: 200,
+    body: "Hello world!"
+  };
 }
- */
-
-function helloWorld(): string {
-  return "Hello, world!";
-}
-
-console.log(helloWorld());

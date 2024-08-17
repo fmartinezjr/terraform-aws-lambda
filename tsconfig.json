@@ -11,5 +11,5 @@
     "rootDir": "./src"
   },
   "include": ["src/**/*"],
-  "exclude": ["dist", ".yarn"]
+  "exclude": ["dist", "node_modules"]
 }

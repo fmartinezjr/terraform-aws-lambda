@@ -7,6 +7,7 @@
     "fix": "prettier --write ."
   },
   "dependencies": {
+    "@types/aws-lambda": "^8.10.143",
     "aws-lambda": "^1.0.7",
     "prettier": "^3.3.3",
     "serverless": "^4.1.22",
@@ -15,6 +16,6 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.143"
+    "@types/node": "^22.4.0"
   }
 }
