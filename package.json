@@ -5,6 +5,7 @@
     "build": "tsc --build",
     "clean": "tsc --build --clean",
     "fix": "prettier --write .",
+    "build-docker": "docker build -t terraform-aws-lambda-app .",
     "offline": "sls offline --stage=offline --httpPort 3200"
   },
   "dependencies": {

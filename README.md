@@ -2,8 +2,20 @@
 
 Using terraform to create aws lambda
 
-## Basic curl POST Request:
+## Running the project locally
 
-```
-curl -X POST http://localhost:3200/events
-```
+1. **Build Docker Image**:
+   ```bash
+   yarn build-docker
+   ```
+
+2. **Run Docker Container**:
+   ```bash
+   docker run -p 3200:3200 terraform-aws-lambda-app
+   ```
+
+3. **Send a Request**:
+   ```bash
+   curl -X POST http://localhost:3200/events -H "Content-Type: application/json" -d '{"key":"value"}'
+   ```
+
