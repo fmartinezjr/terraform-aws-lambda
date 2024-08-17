@@ -1,9 +1,20 @@
 {
   "name": "terraform-aws-lambda",
   "packageManager": "yarn@4.3.0",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "fix": "prettier --write ."
+  },
   "dependencies": {
+    "aws-lambda": "^1.0.7",
     "prettier": "^3.3.3",
+    "serverless": "^4.1.22",
+    "serverless-offline": "^14.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.143"
   }
 }
