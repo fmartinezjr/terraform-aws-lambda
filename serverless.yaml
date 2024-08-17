@@ -1,0 +1,25 @@
+service: terraform-aws-lambda
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  environment:
+    TEST: uno
+  region: us-east-1
+  stage: offline
+  timeout: 30
+
+custom:
+  serverless-offline:
+    useInProcess: true
+
+functions:
+  TerraformAWSLambda:
+    handler: ./dist/index.handler
+    events:
+      - httpApi:
+          path: /events
+          method: POST

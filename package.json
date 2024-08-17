@@ -4,14 +4,15 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "fix": "prettier --write ."
+    "fix": "prettier --write .",
+    "offline": "sls offline --stage=offline --httpPort 3200"
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.143",
     "aws-lambda": "^1.0.7",
     "prettier": "^3.3.3",
-    "serverless": "^4.1.22",
-    "serverless-offline": "^14.0.0",
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.3.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },

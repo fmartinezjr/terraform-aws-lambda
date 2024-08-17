@@ -1,10 +1,10 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
-export async function main(
+export async function handler(
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> {
   return {
     statusCode: 200,
-    body: "Hello world!"
+    body: "Hello world!",
   };
 }
