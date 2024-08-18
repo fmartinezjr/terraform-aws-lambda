@@ -12,4 +12,6 @@ RUN yarn install --frozen-lockfile
 
 EXPOSE 3200
 
+ENV OTEL_LOG_LEVEL=debug
+
 CMD ["dist/index.handler"]

@@ -58,3 +58,5 @@ Using terraform to create aws lambda
    ```bash
    terraform apply -var-file="secret.tfvars"
    ```
+
+docker run -it --entrypoint sh terraform-aws-lambda-app
