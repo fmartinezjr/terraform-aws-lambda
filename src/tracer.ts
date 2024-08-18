@@ -36,3 +36,22 @@ export const sdk = new NodeSDK({
   ],
   resourceDetectors: [awsLambdaDetector],
 });
+
+// Start the SDK with error handling
+try {
+  sdk.start();
+} catch (error) {
+  console.error("Error starting OpenTelemetry SDK", error);
+  process.exit(1);
+}
+
+// Function to shut down the SDK gracefully
+export async function shutdownSdk() {
+  try {
+    console.log("Shutting down OpenTelemetry SDK...");
+    await sdk.shutdown();
+    console.log("OpenTelemetry SDK shutdown completed.");
+  } catch (error) {
+    console.error("Error shutting down OpenTelemetry SDK", error);
+  }
+}

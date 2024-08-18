@@ -1,36 +1,55 @@
 import { trace } from "@opentelemetry/api";
 import { sdk } from "./tracer";
+import {
+  EventBridgeClient,
+  PutEventsCommand,
+} from "@aws-sdk/client-eventbridge";
 
 sdk.start();
 
+// Create an instance of the EventBridgeClient
+const eventBridgeClient = new EventBridgeClient({ region: "us-east-1" }); // Specify your region
+
 export async function handler() {
-  const tracer = trace.getTracer("tracer-1");
+  try {
+    console.log("in handler");
 
-  return tracer.startActiveSpan("time-span", async (span) => {
-    try {
-      console.log("in handler");
+    const message = await new Promise((resolve) => {
+      setTimeout(() => {
+        const msg = Math.random();
+        resolve(msg);
+      }, 2000);
+    });
 
-      const message = await new Promise((resolve) => {
-        setTimeout(() => {
-          const msg = Math.random();
-          resolve(msg);
-        }, 2000);
-      });
+    // Create the EventBridge event
+    const eventBridgeParams = {
+      Entries: [
+        {
+          Source: "my.application",
+          DetailType: "myDetailType",
+          Detail: JSON.stringify({ message }),
+          EventBusName:
+            "arn:aws:events:us-east-1:208346347555:event-bus/default", // Replace with your EventBridge ARN
+        },
+      ],
+    };
 
-      // Optionally, you can add attributes to the span
-      span.setAttribute("name of function", "panch-function");
+    // Send the event to EventBridge
+    const eventBridgeResponse = await eventBridgeClient.send(
+      new PutEventsCommand(eventBridgeParams),
+    );
+    console.log("EventBridge response:", eventBridgeResponse);
 
-      console.log("message being returned", message);
-      return {
-        statusCode: 200,
-        body: `Hello world! ${message}`,
-      };
-    } catch (error) {
-      span.recordException(error as Error);
-      throw error;
-    } finally {
-      span.end(); // End the span
-      await sdk.shutdown(); // Ensure the SDK shuts down properly
-    }
-  });
+    console.log("EventBridge response:", eventBridgeResponse);
+
+    console.log("message being returned", message);
+    return {
+      statusCode: 200,
+      body: `Hello world! ${message}`,
+    };
+  } catch (error) {
+    throw error;
+  } finally {
+    await sdk.shutdown(); // Ensure the SDK shuts down properly
+  }
 }
