@@ -1,13 +1,15 @@
-FROM node:20.11-bookworm as build_base
+FROM public.ecr.aws/lambda/nodejs:20
 
-WORKDIR .
+WORKDIR /var/task
 
-COPY package*.json yarn.lock ./
+COPY . .
 
-RUN yarn install
+RUN corepack enable
 
-COPY dist/ .
+RUN yarn config set nodeLinker node-modules
+
+RUN yarn install --frozen-lockfile
 
 EXPOSE 3200
 
-CMD ["node", "index.js"]
+CMD ["dist/index.handler"]
