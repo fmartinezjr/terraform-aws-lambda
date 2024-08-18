@@ -34,6 +34,7 @@ resource "aws_lambda_function" "terraform_aws_lambda" {
   role          = aws_iam_role.lambda_execution_role.arn
   package_type  = "Image"
   image_uri     = "${var.aws_account}.dkr.ecr.us-east-1.amazonaws.com/terraform_aws_lambda_ecr:latest"
+  architectures = ["arm64"] 
 
   depends_on = [aws_ecr_repository.terraform_aws_lambda_ecr]
 }
