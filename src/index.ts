@@ -1,16 +1,19 @@
 import { trace } from "@opentelemetry/api";
-import { sdk } from "./tracer";
 import {
   EventBridgeClient,
   PutEventsCommand,
 } from "@aws-sdk/client-eventbridge";
-
+import { sdk } from "./tracer";
+// Initialize OpenTelemetry SDK
 sdk.start();
 
 // Create an instance of the EventBridgeClient
-const eventBridgeClient = new EventBridgeClient({ region: "us-east-1" }); // Specify your region
+const eventBridgeClient = new EventBridgeClient({ region: "us-east-1" });
 
 export async function handler() {
+  const tracer = trace.getTracer("tracer-1");
+  const span = tracer.startSpan("default-span");
+
   try {
     console.log("in handler");
 
@@ -40,16 +43,15 @@ export async function handler() {
     );
     console.log("EventBridge response:", eventBridgeResponse);
 
-    console.log("EventBridge response:", eventBridgeResponse);
-
     console.log("message being returned", message);
     return {
       statusCode: 200,
       body: `Hello world! ${message}`,
     };
   } catch (error) {
+    span.recordException(error as Error);
     throw error;
   } finally {
-    await sdk.shutdown(); // Ensure the SDK shuts down properly
+    span.end(); // End the span
   }
 }

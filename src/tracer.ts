@@ -38,13 +38,13 @@ export const sdk = new NodeSDK({
 });
 
 // Start the SDK with error handling
-try {
+/* try {
   sdk.start();
 } catch (error) {
   console.error("Error starting OpenTelemetry SDK", error);
   process.exit(1);
 }
-
+ */
 // Function to shut down the SDK gracefully
 export async function shutdownSdk() {
   try {
